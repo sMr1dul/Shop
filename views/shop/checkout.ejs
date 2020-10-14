@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (products.length > 0) { %>
+                <ul class="cart__item-list">
+                    <% products.forEach(p => { %>
+                        <li class="cart__item">
+                            <h1><%= p.productId.title %></h1>
+                            <h2>Quantity: <%= p.quantity %></h2>
+                        </li>
+                    <% }) %>
+                </ul>
+                <hr>
+                <div class="centered">
+                  <h2>Total Price: $<%= totalPrice %></h2>
+                </div>
+
+                <div class="centered" id="checkout-btn">
+                  <button  type="button" class="btn">Checkout</button>
+                </div>
+                
+            <% } %>
+        </main>
+
+        <!-- Load the required checkout.js script -->
+        <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
+        
+        <!-- Load the required Braintree components. -->
+        <script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+        <script src="https://js.braintreegateway.com/web/3.39.0/js/paypal-checkout.min.js"></script>
+        
+        <script>
+        paypal.Button.render({
+          braintree: braintree,
+          // Other configuration
+        }, '#checkout-btn');
+        </script>
+        <%- include('../includes/end.ejs') %>
+
+
